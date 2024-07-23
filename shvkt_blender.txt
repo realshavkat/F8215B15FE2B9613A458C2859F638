@@ -1,6 +1,7 @@
 import bpy
 import os
 import subprocess
+import urllib.request
 
 # Dictionnaire des noms des bones à renommer
 bones_rename_dict = {
@@ -224,6 +225,28 @@ $jigglebone "{bone_name}"
         
         return {'FINISHED'}
 
+class SHVKT_OT_UpdateScript(bpy.types.Operator):
+    bl_idname = "object.shvkt_update_script"
+    bl_label = "Mettre à jour le script SHVKT"
+    bl_description = "Télécharge et exécute le script SHVKT depuis GitHub"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    script_url = "https://raw.githubusercontent.com/realshavkat/shvkt-blender/main/shvkt_blender.txt"
+
+    def execute(self, context):
+        try:
+            response = urllib.request.urlopen(self.script_url)
+            script_content = response.read().decode('utf-8')
+
+            # Exécuter le script téléchargé
+            exec(script_content, {'__name__': '__main__'})
+
+            self.report({'INFO'}, "Script SHVKT mis à jour et exécuté avec succès")
+        except Exception as e:
+            self.report({'ERROR'}, f"Erreur lors de la mise à jour du script : {str(e)}")
+        
+        return {'FINISHED'}
+
 class SHVKT_PT_MainPanel(bpy.types.Panel):
     bl_label = "SHVKT Tools"
     bl_idname = "SHVKT_PT_main_panel"
@@ -244,17 +267,25 @@ class SHVKT_PT_MainPanel(bpy.types.Panel):
         box = layout.box()
         box.label(text="Créer Jigglebones QC")
         box.operator("object.create_jigglebones_qc")
+        
+        # Section pour les crédits et mise à jour
+        box = layout.box()
+        box.label(text="Crédits")
+        box.label(text="Créé par SHVKT")
+        box.operator("object.shvkt_update_script")
 
 def register():
     bpy.utils.register_class(SHVKT_OT_BCRenameBones)
     bpy.utils.register_class(SHVKT_OT_XPSRenameBones)
     bpy.utils.register_class(SHVKT_OT_CreateJigglebonesQC)
+    bpy.utils.register_class(SHVKT_OT_UpdateScript)
     bpy.utils.register_class(SHVKT_PT_MainPanel)
 
 def unregister():
     bpy.utils.unregister_class(SHVKT_OT_BCRenameBones)
     bpy.utils.unregister_class(SHVKT_OT_XPSRenameBones)
     bpy.utils.unregister_class(SHVKT_OT_CreateJigglebonesQC)
+    bpy.utils.unregister_class(SHVKT_OT_UpdateScript)
     bpy.utils.unregister_class(SHVKT_PT_MainPanel)
 
 if __name__ == "__main__":
