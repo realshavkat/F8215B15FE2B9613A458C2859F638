@@ -270,9 +270,8 @@ class SHVKT_PT_MainPanel(bpy.types.Panel):
         
         # Section pour les crédits et mise à jour
         box = layout.box()
-        box.label(text="Crédits")
-        box.label(text="Créé par SHVKT")
         box.operator("object.shvkt_update_script")
+        box.label(text="Plugin créé par SHVKT")
 
 def register():
     bpy.utils.register_class(SHVKT_OT_BCRenameBones)
