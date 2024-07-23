@@ -227,7 +227,7 @@ $jigglebone "{bone_name}"
 
 class SHVKT_OT_UpdateScript(bpy.types.Operator):
     bl_idname = "object.shvkt_update_script"
-    bl_label = "Mettre à jour le script SHVKT"
+    bl_label = "Mettre à jour"
     bl_description = "Télécharge et exécute le script SHVKT depuis GitHub"
     bl_options = {'REGISTER', 'UNDO'}
 
