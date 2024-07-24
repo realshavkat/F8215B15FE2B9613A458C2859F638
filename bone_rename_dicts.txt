@@ -192,7 +192,7 @@ bones_rename_dict = {
 
 bones_rename_dict3 = {
     "Chr Neck": "ValveBiped.Bip01_Neck1",
-	"Chr Head": "ValveBiped.Bip01_Head1",
+    "Chr Head": "ValveBiped.Bip01_Head1",
     "Chr root": "ValveBiped.Bip01_Pelvis",
     "Chr Waist": "ValveBiped.Bip01_Spine",
     "Chr LUpLeg": "ValveBiped.Bip01_L_Thigh",
